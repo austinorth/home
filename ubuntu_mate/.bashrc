@@ -4,6 +4,15 @@
 
 source ~/git-completion.bash
 
+# Postgres User
+export PGUSER="SECRET"
+
+# Allow Go binaries to be run from anywhere.
+export PATH="/usr/local/go/bin:$HOME/go/bin:$PATH"
+
+# Turn on Go Modules
+export GO111MODULE=on
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -93,6 +102,16 @@ unset color_prompt force_color_prompt
 ERROR_CODE_COMMAND='\[\033[01;31m\]$(RESULT=$?; if (( RESULT != 0 )); then echo " ERROR: $RESULT"; fi)\[\033[01;34m\]'
 POST_PROMPT_COMMAND="$ERROR_CODE_COMMAND$POST_PROMPT_COMMAND"
 
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm*|rxvt*|screen*)
+    TITLE_COMMAND='\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h \w\a\]'
+    PRE_PROMPT_COMMAND="$TITLE_COMMAND$PRE_PROMPT_COMMAND"
+    ;;
+*)
+    ;;
+esac
+
 PROMPT_COMMAND="__git_ps1 '$PRE_PROMPT_COMMAND' '$POST_PROMPT_COMMAND'"
 unset PRE_PROMPT_COMMAND POST_PROMPT_COMMAND
 
@@ -105,6 +124,17 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+# some more ls aliases
+alias ll='ls -AlhXF --g'
+alias la='ls -A'
+alias l='ls -CF'
+alias lg='ls -1XF --g'
+alias l1='lg'
+
+# other aliases
+alias j='jobs'
+alias kj='kill $(jobs -p)'
+
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -114,8 +144,8 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export GO111MODULE=off

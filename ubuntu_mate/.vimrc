@@ -14,6 +14,11 @@ set showcmd
 " Hightlight search terms
 set hlsearch
 
+" Use the computer's default clipboard (windows should use unnamed)
+set clipboard=unnamedplus
+
+autocmd VimLeave * call system('echo ' . shellescape(getreg('+')) . ' | xclip -selection clipboard')
+
 " Tabs and indentation
 set autoindent
 set smartindent
@@ -22,8 +27,10 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
-"Set indentation to 2 spaces when file is .yml
+"Set indentation to 2 spaces when file is .yml or .tf
 au FileType yaml setlocal sw=2 ts=2 sts=2 
+au BufRead,BufNewFile *.tf setlocal sw=2 ts=2 sts=2
+
 
 " Make backspace key work
 set backspace=indent,eol,start
