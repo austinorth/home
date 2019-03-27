@@ -2,8 +2,11 @@
 " plugins)
 set nocompatible
 
+
 " Syntax highlighting
 syntax on
+set termguicolors
+colorscheme base16-eighties
 
 " Line numbers
 set number
