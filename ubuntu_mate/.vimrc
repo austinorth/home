@@ -30,9 +30,10 @@ set shiftwidth=4
 set softtabstop=4
 set expandtab
 
-"Set indentation to 2 spaces when file is .yml or .tf
+"Set indentation to 2 spaces when file is .yml .tf or .sh
 au FileType yaml setlocal sw=2 ts=2 sts=2 
 au BufRead,BufNewFile *.tf setlocal sw=2 ts=2 sts=2
+au BufRead,BufNewFile *.sh setlocal sw=2 ts=2 sts=2
 
 
 " Make backspace key work
