@@ -5,13 +5,24 @@
 source ~/git-completion.bash
 
 # Postgres User
-export PGUSER="SECRET"
+export PGUSER=""
 
 # Allow Go binaries to be run from anywhere.
 export PATH="/usr/local/go/bin:$HOME/go/bin:$PATH"
 
 # Turn on Go Modules
 export GO111MODULE=on
+
+# Export TLD
+export MY_TLD=austin
+
+# Kubernetes config
+export KUBECONFIG="${HOME}/.kube/config"
+export KOPS_STATE_STORE=""
+export TILLER_NAMESPACE=""
+export K8S_CLUSTER_NAME=""
+export NEWRELIC_LICENSE=""
+export SUMO_URL=""
 
 # If not running interactively, don't do anything
 case $- in
@@ -134,6 +145,8 @@ alias l1='lg'
 # other aliases
 alias j='jobs'
 alias kj='kill $(jobs -p)'
+alias ktl=kubectl
+alias gclean='git branch --merged >/tmp/merged-branches && vim /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
 
 # Alias definitions.
 # You may want to put all your additions into a separate file like
@@ -144,8 +157,5 @@ if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
 
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
+# added by travis gem
+[ -f /home/austin/.travis/travis.sh ] && source /home/austin/.travis/travis.sh

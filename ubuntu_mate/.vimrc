@@ -17,11 +17,6 @@ set showcmd
 " Hightlight search terms
 set hlsearch
 
-" Use the computer's default clipboard (windows should use unnamed)
-set clipboard=unnamedplus
-
-autocmd VimLeave * call system('echo ' . shellescape(getreg('+')) . ' | xclip -selection clipboard')
-
 " Tabs and indentation
 set autoindent
 set smartindent
@@ -31,13 +26,16 @@ set softtabstop=4
 set expandtab
 
 "Set indentation to 2 spaces when file is .yml .tf or .sh
-au FileType yaml setlocal sw=2 ts=2 sts=2 
+au FileType yaml setlocal sw=2 ts=2 sts=2
 au BufRead,BufNewFile *.tf setlocal sw=2 ts=2 sts=2
-au BufRead,BufNewFile *.sh setlocal sw=2 ts=2 sts=2
-
+au FileType sh setlocal sw=2 ts=2 sts=2
+au FileType markdown setlocal sw=2 ts=2 sts=2
 
 " Make backspace key work
 set backspace=indent,eol,start
+
+" Trailing whitespace removal command
+:command CleanTrail %s/\s\+$//e
 
 " Show matching parens characters
 set showmatch
@@ -46,6 +44,9 @@ set showmatch
 filetype on
 filetype plugin on
 filetype plugin indent on
+
+" Make markdown easier to work with
+autocmd FileType markdown :set tw=72
 
 " Vim-go configuration
  let g:go_fmt_command = "goimports"
@@ -60,5 +61,9 @@ filetype plugin indent on
  let g:go_highlight_build_contraints = 1
  let g:go_highlight_extra_types = 1
 
+let g:go_def_mode='gopls'
+let g:go_info_mode='gopls'
+
+
 " Run terraform fmt when saving Terraform files
-au BufWritePost *.tf !terraform fmt -write=true %
+au BufWritePost,FileWritePost *.tf !terraform fmt <afile>
