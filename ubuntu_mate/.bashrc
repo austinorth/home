@@ -18,11 +18,7 @@ export MY_TLD=austin
 
 # Kubernetes config
 export KUBECONFIG="${HOME}/.kube/config"
-export KOPS_STATE_STORE=""
-export TILLER_NAMESPACE=""
-export K8S_CLUSTER_NAME=""
-export NEWRELIC_LICENSE=""
-export SUMO_URL=""
+export TILLER_NAMESPACE="default"
 
 # If not running interactively, don't do anything
 case $- in
@@ -142,12 +138,15 @@ alias l='ls -CF'
 alias lg='ls -1XF --g'
 alias l1='lg'
 
+# Kubernetes aliases
+alias ktl='kubectl'
+alias kc='kubectl config get-contexts'
+
 # other aliases
 alias j='jobs'
 alias kj='kill $(jobs -p)'
-alias ktl=kubectl
 alias gclean='git branch --merged >/tmp/merged-branches && vim /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
-
+alias weather='curl wttr.in/15222'
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
@@ -156,6 +155,7 @@ alias gclean='git branch --merged >/tmp/merged-branches && vim /tmp/merged-branc
 if [ -f ~/.bash_aliases ]; then
     . ~/.bash_aliases
 fi
+
 
 # added by travis gem
 [ -f /home/austin/.travis/travis.sh ] && source /home/austin/.travis/travis.sh
