@@ -1,18 +1,55 @@
+" Specify a directory for plugins
+call plug#begin('~/.vim/plugged')
+
+" Nord theme
+Plug 'arcticicestudio/nord-vim'
+
+" Gruvbox theme
+Plug 'morhetz/gruvbox'
+
+" Tmux Split Helper
+Plug 'christoomey/vim-tmux-navigator'
+
+" Nerdtree
+Plug 'preservim/nerdtree'
+
+" vim-go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+
+" Initialize plugin system
+call plug#end()
+
+" Powerline
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
+set laststatus=2
+
 " Turn off compatibility mode (prevents errors related to line-continuation in
 " plugins)
 set nocompatible
 
+" This is only necessary if you use "set termguicolors".
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+
+" fixes glitch? in colors when using vim with tmux
+set t_Co=256
+
+" fixes glitch? in colors when using vim with tmux
+set termguicolors
+colorscheme gruvbox
+set background=dark
+let g:airline_theme='gruvbox'
 
 " Syntax highlighting
 syntax on
-set termguicolors
-colorscheme base16-eighties
 
 " Line numbers
 set number
 
 " Show commands while being typed
-set showcmd
+"set showcmd
 
 " Hightlight search terms
 set hlsearch
@@ -67,3 +104,5 @@ let g:go_info_mode='gopls'
 
 " Run terraform fmt when saving Terraform files
 au BufWritePost,FileWritePost *.tf !terraform fmt <afile>
+au BufNewFile,BufRead Jenkinsfile setf groovy
+au BufNewFile,BufRead Jenkinsfile setlocal sw=2 ts=2 sts=2
