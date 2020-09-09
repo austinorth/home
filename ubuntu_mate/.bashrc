@@ -3,31 +3,30 @@
 # for examples
 
 source ~/git-completion.bash
-
-# Postgres User
-export PGUSER=""
+source /usr/share/bash-completion/bash_completion
+source $HOME/.cargo/env
 
 # Allow Go binaries to be run from anywhere.
 export PATH="/usr/local/go/bin:$HOME/go/bin:$PATH"
 
+# Add Rust binaries to path
+export PATH="$HOME/.cargo/bin:$PATH"
+
 # Turn on Go Modules
 export GO111MODULE=on
 
-# Export TLD
-export MY_TLD=austin
-
 # Kubernetes config
 export KUBECONFIG="${HOME}/.kube/config"
-export TILLER_NAMESPACE="default"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
       *) return;;
 esac
-
-# vi mode ftw
-# set -o vi
 
 # Preserve the physical directory structure when following symlinks
 set -o physical
@@ -58,11 +57,6 @@ shopt -s checkwinsize
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
-
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm|xterm-color|*-256color) color_prompt=yes;;
-esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
@@ -139,23 +133,21 @@ alias lg='ls -1XF --g'
 alias l1='lg'
 
 # Kubernetes aliases
-alias ktl='kubectl'
+alias k='kubectl'
 alias kc='kubectl config get-contexts'
 
 # other aliases
 alias j='jobs'
 alias kj='kill $(jobs -p)'
 alias gclean='git branch --merged >/tmp/merged-branches && vim /tmp/merged-branches && xargs git branch -d </tmp/merged-branches'
-alias weather='curl wttr.in/15222'
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
+alias weather='curl wttr.in/15214'
+alias wstart='watson start'
+alias wstop='watson stop'
 
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+# Work stuff
+if [ -f ~/.bash_niche ]; then
+    . ~/.bash_niche
 fi
 
-
-# added by travis gem
-[ -f /home/austin/.travis/travis.sh ] && source /home/austin/.travis/travis.sh
+source <(kubectl completion bash)
+complete -F __start_kubectl k
